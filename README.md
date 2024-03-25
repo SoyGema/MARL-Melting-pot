@@ -2,13 +2,13 @@
 Official Repository for Melting Pot Contest Experiments
 
 >**NOTE:** This repository provides a basic startup code for training RLLIB agents on Melting Pot.
-We plan to add additional support including more examples,
-benchmarked configs and GCP compute setup over the next couple of weeks. We will
-also make any necessary updates based on feedback from participants. Hence, it is recommended
-to sync up your fork every few days for next couple of weeks. We will post in discussion
-forums about any updates as they become available.
+This repository comes from a fork from [this
+one](https://github.com/rstrivedi/Melting-Pot-Contest-2023) used as a baseline,
+with some introduced changes in substrates.
+
 
 # Table of Contents
+- [Concepts](#concepts)
 - [Substrates and Scenarios](#substrates-and-scenarios)
 - [Installation Guidelines](#installation-guidelines)
 - [Run Training](#run-training)
@@ -19,6 +19,55 @@ forums about any updates as they become available.
   - [Visualization](#visualization)
   - [Logging](#logging)
 - [Identified Issues with Ray 2.6.1](#identified-issues-with-ray-2.6.1)
+
+## Concepts
+
+This section aims to summarize some of the key concepts coming from the
+[technical report](https://arxiv.org/pdf/2211.13746.pdf) 
+The two main research questions that this framework poses are (1)
+how to train agents so that they develop social-cognitive abilities on par with
+those of humans; and (2) how to measure progress toward the goal evaluating
+generalization.
+It explores the general challenge of cooperation through some social-cognitive
+dimensions (persuation and negotiation, reciprocity and reputational concern,
+alliances and incentive alignment, imitation and teaching, leadership and
+responsibilty, commitment and promises, trust and monitoring, sharing and
+division of labor, social norms and instituions, and other social-cognitive
+capacities)
+Melting Pot 2.0 allows researchers to evaluate algorithms that train populations of agents
+to behave socially. How will the resulting agents resolve social dilemmas? Can they deal with freeriders? Will they learn policies that have an equitable distribution of returns? Will the winner
+take all? These questions not only present interesting research directions, but are also important
+to consider in the context of AI safety and fairness. After all, human society is a multi-agent
+system and any deployed AI agent will have to generalize to it.
+
+
+Some key concepts include the following terminology:
+
+1. *MAPLA*. Multi-agent population learning algorithm. Term reffering to any
+   training process that produces a decentralized population of agents capable
+   of simultaneous interaction with one another.
+
+
+2. *Substrate*. N-player partially observable general-sum Markov game. All the
+   substrates share some properties regarding movement *actions* (forward,
+   backward, left, right, turn left, turn right), *observations* (in RGB pixels,
+   the size of each observation is 88x88x3), *agents observability* (the agents
+   have a partial observability window of 11x11 sprites) The agent sees 9 rows
+   in front of itself, 1 row behind, and 5 columns to either side. A tutorial
+   for creating substrates can be found
+   [here](https://github.com/google-deepmind/meltingpot/blob/main/docs/substrate_tutorial/index.md)
+   
+  
+3. *Role* . The player´s observation and action space may vary according to
+   their role. Substrates have a set of allowed roles. the role determines the
+   action and the observation space.
+
+4. *Substrate factories* Sub-sustate defined by a role. Used to sample a
+   substrate, allowing agents to be trained for a specific role supported by
+   that sustrate factory.
+
+5. *Focal population* When we train the agent in a substrate factory, this
+   results in a focal population.
 
 ## Substrates and Scenarios
 
