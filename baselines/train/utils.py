@@ -7,6 +7,13 @@ import numpy as np
 import cv2
 import tree
 from gymnasium import spaces
+import logging
+import sys
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    handlers=[logging.StreamHandler(sys.stdout)])
+
 
 PLAYER_STR_FORMAT = 'player_{index}'
 _IGNORE_KEYS = ['WORLD.RGB', 'INTERACTION_INVENTORIES', 'NUM_OTHERS_WHO_CLEANED_THIS_STEP']
@@ -21,9 +28,14 @@ def downsample_observation(array: np.ndarray, scaled) -> np.ndarray:
     Returns:
       ndarray: downsampled observation  
     """
+ 
+    original_shape = array.shape
     
     frame = cv2.resize(
             array, (array.shape[0]//scaled, array.shape[1]//scaled), interpolation=cv2.INTER_AREA)
+    new_shape = frame.shape
+    #logging.debug(f"downsample_observation: Original shape {original_shape}, New shape {new_shape}")
+    # Called during training therefore commented (88,88,3)
     return frame
 
 def timestep_to_observations(timestep: dm_env.TimeStep) -> Mapping[str, Any]:
@@ -36,6 +48,8 @@ def timestep_to_observations(timestep: dm_env.TimeStep) -> Mapping[str, Any]:
         for key, value in observation.items()
         if key not in _IGNORE_KEYS
     }
+  #logging.debug(f"timestep_to_observations: Extracted keys {list(gym_observations.keys())}")
+  # Here is given the number of players.
   return gym_observations
 
 
@@ -43,9 +57,14 @@ def remove_unrequired_observations_from_space(
     observation: spaces.Dict) -> spaces.Dict:
   """Remove observations that are not supposed to be used by policies."""
 
-  return spaces.Dict({
-      key: observation[key] for key in observation if key not in _IGNORE_KEYS
-  })
+  original_keys = list(observation.keys())
+  filtered_space = spaces.Dict({
+        key: observation[key] for key in observation if key not in _IGNORE_KEYS
+    })
+  filtered_keys = list(filtered_space.keys())
+  #logging.debug(f"remove_unrequired_observations_from_space: Original keys {original_keys}, Filtered keys {filtered_keys}")
+  ## things that for whatever reason we are not using in the policy, in this case 'COLLECTIVE REWARD','INTERACTION_INVENTORIES',ETC
+  return filtered_space
 
 
 
