@@ -32,7 +32,7 @@ It explores the general challenge of cooperation through some social-cognitive
 dimensions (persuation and negotiation, reciprocity and reputational concern,
 alliances and incentive alignment, imitation and teaching, leadership and
 responsibilty, commitment and promises, trust and monitoring, sharing and
-division of labor, social norms and instituions, and other social-cognitive
+division of labor, social norms and institutions, and other social-cognitive
 capacities)
 Melting Pot 2.0 allows researchers to evaluate algorithms that train populations of agents
 to behave socially. How will the resulting agents resolve social dilemmas? Can they deal with freeriders? Will they learn policies that have an equitable distribution of returns? Will the winner
@@ -57,7 +57,6 @@ Some key concepts include the following terminology:
    for creating substrates can be found
    [here](https://github.com/google-deepmind/meltingpot/blob/main/docs/substrate_tutorial/index.md)
    
-  
 3. *Role* . The player´s observation and action space may vary according to
    their role. Substrates have a set of allowed roles. the role determines the
    action and the observation space.
