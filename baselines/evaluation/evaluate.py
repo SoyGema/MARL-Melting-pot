@@ -4,8 +4,11 @@ import contextlib
 import json
 import pandas as pd
 import tensorflow as tf
+import sys
+import os
 tf.compat.v1.disable_eager_execution()
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from baselines.train.configs import SUPPORTED_SCENARIOS
 from baselines.customs.policies import EvalPolicy
 from baselines.wrappers.downsamplepolicy_wrapper import DownsamplingPolicyWraper

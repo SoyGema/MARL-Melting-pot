@@ -136,8 +136,9 @@ if __name__ == "__main__":
 
   # Setup WanDB 
   if "WANDB_API_KEY" in os.environ and args.wandb:
-    wandb_project = f'{args.exp}_{args.framework}'
+    #wandb_project = f'{args.exp}_{args.framework}'
     wandb_group = "meltingpot"
+    wandb_project = "MARL meltingpot"
 
     # Set up Weights And Biases logging if API key is set in environment variable.
     wdb_callbacks = [

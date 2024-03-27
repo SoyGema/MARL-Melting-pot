@@ -8,6 +8,7 @@ with some introduced changes in substrates.
 
 
 # Table of Contents
+
 - [Concepts](#concepts)
 - [Substrates and Scenarios](#substrates-and-scenarios)
 - [Installation Guidelines](#installation-guidelines)
@@ -113,11 +114,6 @@ SYSTEM_VERSION_COMPAT=0 pip install dmlab2d
 pip install -e .
 sh ray_patch.sh
 ```
-
-### Google Cloud Platform Setup
-
-Coming Soon!
-
 
 ## Run Training
 
@@ -236,8 +232,9 @@ You can use either Wandb or Tensorboard to log and visualize your training lands
 
 To setup Wandb:
 
-1. Create an account on [Wandb](https://wandb.ai) website
-2. Get the API key from your account and set corresponding environment variable using `export WANDB_API_KEY=<Your Key>`
+1. wandb login
+2. Get the API key from your account and set corresponding environment variable
+   using in CLI `export WANDB_API_KEY=<Your Key>`
 3. Enable Wandb logging during training using  `python run_ray_train.py --wandb=True`
 
 #### Tensorboard Logging
