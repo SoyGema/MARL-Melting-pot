@@ -1,5 +1,4 @@
-# Melting Pot Contest @ Neurips 2023
-Official Repository for Melting Pot Contest Experiments
+# MARL Melting Pot
 
 >**NOTE:** This repository provides a basic startup code for training RLLIB agents on Melting Pot.
 This repository comes from a fork from [this
@@ -29,12 +28,14 @@ The two main research questions that this framework poses are (1)
 how to train agents so that they develop social-cognitive abilities on par with
 those of humans; and (2) how to measure progress toward the goal evaluating
 generalization.
+
 It explores the general challenge of cooperation through some social-cognitive
 dimensions (persuation and negotiation, reciprocity and reputational concern,
 alliances and incentive alignment, imitation and teaching, leadership and
 responsibilty, commitment and promises, trust and monitoring, sharing and
 division of labor, social norms and institutions, and other social-cognitive
 capacities)
+
 Melting Pot 2.0 allows researchers to evaluate algorithms that train populations of agents
 to behave socially. How will the resulting agents resolve social dilemmas? Can they deal with freeriders? Will they learn policies that have an equitable distribution of returns? Will the winner
 take all? These questions not only present interesting research directions, but are also important
@@ -44,7 +45,7 @@ system and any deployed AI agent will have to generalize to it.
 
 Some key concepts include the following terminology:
 
-1. *MAPLA*. Multi-agent population learning algorithm. Term reffering to any
+1. *MAPLA*. Multi-agent population learning algorithm. Term refearing to any
    training process that produces a decentralized population of agents capable
    of simultaneous interaction with one another.
 
@@ -153,6 +154,13 @@ if your algorithm does not seem to find GPU when enabled.
 ```
 python baselines/evaluation/evaluate.py [OPTIONS]
 ```
+
+For running a first evaluation we need at least config_dir and policies_dir arguments
+
+```
+python baselines/evaluation/evaluate.py --config_dir /Users/../PPO_meltingpot_1a4b7_00000_0_2024-03-26_23-06-31 --policies_dir /Users/../PPO_meltingpot_1a4b7_00000_0_2024-03-26_23-06-31/checkpoint_000000/policies
+```
+
 ```
 OPTIONS:
   -h, --help            show this help message and exit

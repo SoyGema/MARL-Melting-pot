@@ -109,7 +109,7 @@ if __name__ == "__main__":
   parser.add_argument(
       "--policies_dir",
       type=str,
-      help="Directory where your trained polcies are located",
+      help="Directory where your trained policies are located",
   )
 
   parser.add_argument(
