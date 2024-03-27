@@ -25,9 +25,9 @@ with some introduced changes in substrates.
 This section aims to summarize some of the key concepts coming from the
 [technical report](https://arxiv.org/pdf/2211.13746.pdf) 
 The two main research questions that this framework poses are (1)
-how to train agents so that they develop social-cognitive abilities on par with
-those of humans; and (2) how to measure progress toward the goal evaluating
-generalization.
+**how to train agents so that they develop social-cognitive abilities on par with
+those of humans?**; and (2) **how to measure progress toward the goal evaluating
+generalization?**.
 
 It explores the general challenge of cooperation through some social-cognitive
 dimensions (persuation and negotiation, reciprocity and reputational concern,
@@ -42,6 +42,7 @@ take all? These questions not only present interesting research directions, but 
 to consider in the context of AI safety and fairness. After all, human society is a multi-agent
 system and any deployed AI agent will have to generalize to it.
 
+![Concepts about Meltingpot](images_and_videos/Multiagente.png)
 
 Some key concepts include the following terminology:
 
