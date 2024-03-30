@@ -38,9 +38,11 @@ def get_experiment_config(args, default_config):
         substrate_name = "clean_up"
     elif args.exp == 'territory_rooms':
         substrate_name = "territory__rooms"
+    elif args.exp == 'day_care':
+        substrate_name = "daycare"
     else:
         raise Exception("Please set --exp to be one of ['pd_arena', 'al_harvest', 'clean_up', \
-                        'territory_rooms']. Other substrates are not supported.")
+                        'territory_rooms','daycare']. Other substrates are not supported.")
 
     # Fetch player roles
     player_roles = substrate.get_config(substrate_name).default_player_roles
