@@ -23,6 +23,7 @@ SUPPORTED_SCENARIOS = [
     'territory__rooms_1',
     'territory__rooms_2',
     'territory__rooms_3',
+    'daycare_0',
 ]
 
 IGNORE_KEYS = ['WORLD.RGB', 'INTERACTION_INVENTORIES', 'NUM_OTHERS_WHO_CLEANED_THIS_STEP']
