@@ -2,8 +2,12 @@ from absl.testing import absltest
 from gymnasium.spaces import discrete
 from meltingpot import substrate
 from meltingpot.configs.substrates import prisoners_dilemma_in_the_matrix__arena
-
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from baselines.train import make_envs
+
+
 
 
 class MeltingPotEnvTests(absltest.TestCase):
@@ -64,3 +68,4 @@ class MeltingPotEnvTests(absltest.TestCase):
 
 if __name__ == '__main__':
   absltest.main()
+
