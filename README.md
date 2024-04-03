@@ -66,10 +66,11 @@ Some key concepts include the following terminology:
 
 4. *Substrate factories* Sub-sustate defined by a role. Used to sample a
    substrate, allowing agents to be trained for a specific role supported by
-   that sustrate factory.
+   that substrate factory.
 
 5. *Focal population* When we train the agent in a substrate factory, this
-   results in a focal population.
+   results in a focal population. There is another concept of background
+   population that is the set of RL agents.
 
 ## Substrates and Scenarios
 
