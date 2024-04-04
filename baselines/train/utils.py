@@ -7,6 +7,7 @@ import numpy as np
 import cv2
 import tree
 from gymnasium import spaces
+from gymnasium.spaces import Discrete
 import logging
 import sys
 
@@ -32,7 +33,7 @@ def downsample_observation(array: np.ndarray, scaled) -> np.ndarray:
     original_shape = array.shape
     
     frame = cv2.resize(
-            array, (array.shape[0]//scaled, array.shape[1]//scaled), interpolation=cv2.INTER_AREA)
+            array, (array.shape[0]//scaled-2, array.shape[1]//scaled-2), interpolation=cv2.INTER_AREA)
     new_shape = frame.shape
     #logging.debug(f"downsample_observation: Original shape {original_shape}, New shape {new_shape}")
     # Called during training therefore commented (88,88,3)
@@ -81,7 +82,7 @@ def spec_to_space(spec: tree.Structure[dm_env.specs.Array]) -> spaces.Space:
     The Gym space corresponding to the given spec.
   """
   if isinstance(spec, dm_env.specs.DiscreteArray):
-    return spaces.Discrete(spec.num_values)
+    return Discrete(spec.num_values)
   elif isinstance(spec, dm_env.specs.BoundedArray):
     return spaces.Box(spec.minimum, spec.maximum, spec.shape, spec.dtype)
   elif isinstance(spec, dm_env.specs.Array):

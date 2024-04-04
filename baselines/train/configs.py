@@ -1,6 +1,10 @@
 from meltingpot import substrate
 from ray.rllib.policy import policy
 from baselines.train import make_envs
+from ray.rllib.models import ModelCatalog
+from ray.rllib.examples.models.centralized_critic_models import CentralizedCriticModel , TorchCentralizedCriticModel
+
+
 
 SUPPORTED_SCENARIOS = [
     'allelopathic_harvest__open_0',
@@ -49,7 +53,7 @@ def get_experiment_config(args, default_config):
     player_roles = substrate.get_config(substrate_name).default_player_roles
 
     if args.downsample:
-        scale_factor = 8
+        scale_factor = 2
     else:
         scale_factor = 1
 
@@ -70,8 +74,8 @@ def get_experiment_config(args, default_config):
         "train_batch_size": 400,
         "sgd_minibatch_size": 32,
         "disable_observation_precprocessing": True,
-        "use_new_rl_modules": False,
-        "use_new_learner_api": False,
+        "use_new_rl_modules": True,
+        "use_new_learner_api": False, # Drops error when true
         "framework": args.framework,
 
         # agent model
@@ -84,7 +88,10 @@ def get_experiment_config(args, default_config):
         "lstm_use_prev_action": True,
         "lstm_use_prev_reward": False,
         "lstm_cell_size": 2,
-        "shared_policy": False,
+        "shared_policy": True, ## Change for Parameter sharing ?
+
+        # use centralized critic
+        "use_centralized_critic": True,
 
         # experiment trials
         "exp_name": args.exp,
@@ -121,8 +128,8 @@ def get_experiment_config(args, default_config):
     
     ### SOLVE MISCONFIGS ###
     
-    #run_configs.experimental(_enable_new_api_stack=params_dict['use_new_rl_modules'])
-    #run_configs.training(_enable_learner_api=params_dict['use_new_learner_api'])
+    run_configs.experimental(_enable_new_api_stack=params_dict['use_new_rl_modules'])
+    run_configs.experimental(_enable_new_api_stack=params_dict['use_new_learner_api'])
     run_configs = run_configs.framework(params_dict['framework'])
     run_configs.log_level = params_dict['logging']
     run_configs.seed = params_dict['seed']
@@ -131,29 +138,52 @@ def get_experiment_config(args, default_config):
     run_configs.env = params_dict['env_name']
     run_configs.env_config = params_dict['env_config']
 
-    # Setup multi-agent policies. The below code will initialize independent
-    # policies for each agent.
+
     base_env = make_envs.env_creator(run_configs.env_config)
     policies = {}
     player_to_agent = {}
-    for i in range(len(player_roles)):
-        rgb_shape = base_env.observation_space[f"player_{i}"]["RGB"].shape
-        sprite_x = rgb_shape[0]
-        sprite_y = rgb_shape[1]
 
-        policies[f"agent_{i}"] = policy.PolicySpec(
-            observation_space=base_env.observation_space[f"player_{i}"],
-            action_space=base_env.action_space[f"player_{i}"],
-            config={
-                "model": {
-                    "conv_filters": [[16, [8, 8], 1],
+    # Try to implement centralized critic . See also https://docs.ray.io/en/master/rllib/rllib-env.html#implementing-a-centralized-critic
+    if params_dict['use_centralized_critic']:
+        ModelCatalog.register_custom_model("centralized_critic_model", TorchCentralizedCriticModel)
+        for i in range(len(player_roles)):
+            rgb_shape = base_env.observation_space[f"player_{i}"]["RGB"].shape
+            sprite_x = rgb_shape[0]
+            sprite_y = rgb_shape[1]
+            policies = policy.PolicySpec(
+                observation_space=base_env.observation_space[f"player_{i}"],
+                action_space=base_env.action_space[f"player_{i}"],
+                config={
+                    "model": {
+                        "custom_model": "centralized_critic_model",
+                        "conv_filters": [[16, [8, 8], 1],
                                     [128, [sprite_x, sprite_y], 1]],
-                },
-            })
-        player_to_agent[f"player_{i}"] = f"agent_{i}"
+                    },
+                })
+            player_to_agent[f"player_{i}"] = f"agent_{i}"
+    # Setup multi-agent policies. The below code will initialize independent
+    # policies for each agent. From what I understand, this is fully Independent
+    # Learning setup.
+    else:
+        for i in range(len(player_roles)):
+            rgb_shape = base_env.observation_space[f"player_{i}"]["RGB"].shape
+            sprite_x = rgb_shape[0]
+            sprite_y = rgb_shape[1]
 
-    run_configs.multi_agent(policies=policies, policy_mapping_fn=(lambda agent_id, *args, **kwargs: 
-                                                                  player_to_agent[agent_id]))
+            policies[f"agent_{i}"] = policy.PolicySpec(
+                observation_space=base_env.observation_space[f"player_{i}"],
+                action_space=base_env.action_space[f"player_{i}"],
+                config={
+                    "model": {
+                        "conv_filters": [[16, [8, 8], 1],
+                                    [128, [sprite_x, sprite_y], 1]],
+                    },
+                })
+    
+            player_to_agent[f"player_{i}"] = f"agent_{i}"
+
+        run_configs.multi_agent(policies=policies, policy_mapping_fn=(lambda agent_id, *args, **kwargs: 
+                                                                    player_to_agent[agent_id]))
     
     run_configs.model["fcnet_hiddens"] = params_dict['fcnet_hidden']
     run_configs.model["post_fcnet_hiddens"] = params_dict['post_fcnet_hidden']
