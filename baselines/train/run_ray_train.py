@@ -54,7 +54,7 @@ def get_cli_args():
   parser.add_argument(
       "--exp",
       type=str,
-      choices = ['pd_arena','al_harvest','clean_up','territory_rooms', 'day_care', 'commons_harvest__partnership'],
+      choices = ['pd_arena','al_harvest','clean_up','territory_rooms', 'day_care', 'commons_harvest__partnership', 'commons_harvest__open'],
       default="pd_arena",
       help="Name of the substrate to run",
   )
