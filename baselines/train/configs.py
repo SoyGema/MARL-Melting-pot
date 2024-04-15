@@ -24,6 +24,7 @@ SUPPORTED_SCENARIOS = [
     'territory__rooms_2',
     'territory__rooms_3',
     'daycare_0',
+    'commons_harvest__partnership_0',
 ]
 
 IGNORE_KEYS = ['WORLD.RGB', 'INTERACTION_INVENTORIES', 'NUM_OTHERS_WHO_CLEANED_THIS_STEP']
@@ -41,9 +42,11 @@ def get_experiment_config(args, default_config):
         substrate_name = "territory__rooms"
     elif args.exp == 'day_care':
         substrate_name = "daycare"
+    elif args.exp == 'commons_harvest__partnership':
+        substrate_name = "commons_harvest__partnership"
     else:
         raise Exception("Please set --exp to be one of ['pd_arena', 'al_harvest', 'clean_up', \
-                        'territory_rooms','daycare']. Other substrates are not supported.")
+                        'territory_rooms','daycare','commons_harvest__partnership']. Other substrates are not supported.")
 
     # Fetch player roles
     player_roles = substrate.get_config(substrate_name).default_player_roles
