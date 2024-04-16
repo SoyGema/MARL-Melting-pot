@@ -1,5 +1,9 @@
 # MARL Melting Pot
 
+Part of Alignment final project .
+Currently under development. Find document about research [here](https://docs.google.com/document/d/1I0PSGQzjE7XYgp2RK7zeijA3fGBJ80TQMMMU-SMo7Uk/edit?usp=sharing)
+
+
 >**NOTE:** This repository provides a basic startup code for training RLLIB agents on Melting Pot.
 This repository comes from a fork from [this
 one](https://github.com/rstrivedi/Melting-Pot-Contest-2023) used as a baseline,
