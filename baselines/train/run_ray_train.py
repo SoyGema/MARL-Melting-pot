@@ -41,7 +41,7 @@ def get_cli_args():
   )
   parser.add_argument(
         "--algo",
-        choices=["ppo"],
+        choices=["ppo" ],
         default="ppo",
         help="Algorithm to train agents.",
   )
@@ -54,7 +54,7 @@ def get_cli_args():
   parser.add_argument(
       "--exp",
       type=str,
-      choices = ['pd_arena','al_harvest','clean_up','territory_rooms', 'day_care'],
+      choices = ['pd_arena','al_harvest','clean_up','territory_rooms', 'day_care', 'commons_harvest__partnership', 'commons_harvest__open', 'commons_harvest__closed'],
       default="pd_arena",
       help="Name of the substrate to run",
   )
@@ -117,6 +117,10 @@ if __name__ == "__main__":
   if args.algo == "ppo":
      trainer = "PPO"
      default_config = ppo.PPOConfig()
+
+  if args.algo == "SAC":
+      trainer = "SAC"
+      default_config = sac.SACConfig()
   else:
      print('The selected option is not tested. You may encounter issues if you use the baseline \
            policy configurations with non-tested algorithms')
