@@ -45,10 +45,12 @@ def get_experiment_config(args, default_config):
     elif args.exp == 'commons_harvest__partnership':
         substrate_name = "commons_harvest__partnership"
     elif args.exp == 'commons_harvest__open':
-        substrate_name = "commons_harvest__open"       
+        substrate_name = "commons_harvest__open"
+    elif args.exp == 'commons_harvest__closed':
+        substrate_name = "commons_harvest__closed"        
     else:
         raise Exception("Please set --exp to be one of ['pd_arena', 'al_harvest', 'clean_up', \
-                        'territory_rooms','daycare','commons_harvest__partnership', 'commons_harvest__open']. Other substrates are not supported.")
+                        'territory_rooms','daycare','commons_harvest__partnership', 'commons_harvest__open','common_harvest_closed']. Other substrates are not supported.")
 
     # Fetch player roles
     player_roles = substrate.get_config(substrate_name).default_player_roles

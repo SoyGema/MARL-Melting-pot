@@ -8,7 +8,7 @@ from typing import *
 from ray import air
 from ray import tune
 from configs import get_experiment_config
-from ray.rllib.algorithms import ppo , sac , dqn
+from ray.rllib.algorithms import ppo
 from ray.tune import registry
 from ray.air.integrations.wandb import WandbLoggerCallback
 from baselines.train import make_envs
@@ -41,7 +41,7 @@ def get_cli_args():
   )
   parser.add_argument(
         "--algo",
-        choices=["ppo" , "SAC" , "DQN"],
+        choices=["ppo" ],
         default="ppo",
         help="Algorithm to train agents.",
   )
@@ -54,7 +54,7 @@ def get_cli_args():
   parser.add_argument(
       "--exp",
       type=str,
-      choices = ['pd_arena','al_harvest','clean_up','territory_rooms', 'day_care', 'commons_harvest__partnership', 'commons_harvest__open'],
+      choices = ['pd_arena','al_harvest','clean_up','territory_rooms', 'day_care', 'commons_harvest__partnership', 'commons_harvest__open', 'commons_harvest__closed'],
       default="pd_arena",
       help="Name of the substrate to run",
   )
