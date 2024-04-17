@@ -1,7 +1,7 @@
 from absl.testing import absltest
 from gymnasium.spaces import discrete
 from meltingpot import substrate
-from meltingpot.configs.substrates import prisoners_dilemma_in_the_matrix__arena
+from meltingpot.configs.substrates import commons_harvest__closed
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
@@ -15,11 +15,11 @@ class MeltingPotEnvTests(absltest.TestCase):
 
   def setUp(self):
     super().setUp()
-    env_config = substrate.get_config('prisoners_dilemma_in_the_matrix__arena')
+    env_config = substrate.get_config('commons_harvest__closed')
     roles = env_config.default_player_roles
     self._num_players = len(roles)
     self._env = make_envs.env_creator({
-        'substrate': 'prisoners_dilemma_in_the_matrix__arena',
+        'substrate': 'commons_harvest__closed',
         'roles': roles,
         'scaled': 8,
     })
@@ -27,7 +27,7 @@ class MeltingPotEnvTests(absltest.TestCase):
   def test_action_space_size(self):
     """Test the action space is the correct size."""
 
-    actions_count = len(prisoners_dilemma_in_the_matrix__arena.ACTION_SET)
+    actions_count = len(commons_harvest__closed.ACTION_SET)
     env_action_space = self._env.action_space['player_1']
     self.assertEqual(env_action_space, discrete.Discrete(actions_count))
 
@@ -63,7 +63,7 @@ class MeltingPotEnvTests(absltest.TestCase):
     
     self._env.reset()
     render = self._env.render()
-    self.assertEqual(render.shape, (192, 200, 3))
+    self.assertEqual(render.shape, (144, 192, 3))
 
 
 if __name__ == '__main__':
