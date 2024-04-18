@@ -1,7 +1,7 @@
 import argparse
 from gymnasium.spaces import discrete
 from meltingpot import substrate
-from meltingpot.configs.substrates import prisoners_dilemma_in_the_matrix__arena , daycare
+from meltingpot.configs.substrates import commons_harvest__closed
 from meltingpot.configs import substrates
 import sys
 import os
@@ -25,10 +25,10 @@ class MeltingPotEnvInformation():
   def action_space(self):
       """Test the action space."""
 
-      actions_count = len(daycare.ACTION_SET)
+      actions_count = len(commons_harvest__closed.ACTION_SET)
       env_action_space = self._env.action_space['player_1']
       print(f"Expected Discrete Action Space Size and number of players: {discrete.Discrete(actions_count)}")
-      print(f"Action Space: {prisoners_dilemma_in_the_matrix__arena.ACTION_SET}")
+      print(f"Action Space: {commons_harvest__closed.ACTION_SET}")
 
   def observation_space(self):
     """Prints the observation space."""
