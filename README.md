@@ -202,13 +202,6 @@ OPTIONS:
 
 ## How to Guide
 
-
-### Make Submission
----
-The trained models will be available in the results folder configured by you.
-Please refer to the guidelines on AICrowd [submision-starter-kit](https://gitlab.aicrowd.com/aicrowd/challenges/meltingpot-2023/meltingpot-2023-starter-kit) to make a
-submission using the trained checkpoints.
-
 ### Visualization
 ---
 #### How to render trained models?
