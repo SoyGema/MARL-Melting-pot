@@ -25,6 +25,17 @@ SUPPORTED_SCENARIOS = [
     'territory__rooms_3',
     'daycare_0',
     'commons_harvest__partnership_0',
+    'commons_harvest__partnership_1',
+    'commons_harvest__partnership_2',
+    'commons_harvest__partnership_3',
+    'commons_harvest__partnership_4',
+    'commons_harvest__partnership_5',
+    'commons_harvest__open_0',
+    'commons_harvest__open_1',
+    'commons_harvest__closed_0',
+    'commons_harvest__closed_1',
+    'commons_harvest__closed_2',
+    'commons_harvest__closed_3',
 ]
 
 IGNORE_KEYS = ['WORLD.RGB', 'INTERACTION_INVENTORIES', 'NUM_OTHERS_WHO_CLEANED_THIS_STEP']
